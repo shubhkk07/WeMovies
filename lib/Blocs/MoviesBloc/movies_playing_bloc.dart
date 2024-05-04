@@ -21,6 +21,7 @@ class MoviesPlayingBloc extends Bloc<MoviesPlayingEvent, MoviesPlayingState> {
 
   void _fethcNowPlayingMovies(FetchNowPlaying event, Emitter<MoviesPlayingState> emit) async {
     (event.nextPage != null && event.nextPage!) ? _pageCount++ : _pageCount = 1;
+    _pageCount == 1 ? _moviesList.clear() : null;
     final List<Movie> list = await _movieRepo.getNowPlayingMovies(page: _pageCount);
     _moviesList.addAll(list);
     emit(MoviesPlayingLoaded(_moviesList));

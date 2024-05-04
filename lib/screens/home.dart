@@ -45,7 +45,13 @@ class _HomePageState extends State<HomePage> {
                   "We Movies",
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
                 ),
-                Text("22 movies are loaded in now playing."),
+                BlocConsumer<MoviesPlayingBloc, MoviesPlayingState>(
+                  listener: (context, state) {},
+                  builder: (context, state) {
+                    if (state is MoviesPlayingLoaded) return Text("${state.list.length} movies are loaded in now playing.");
+                    return const SizedBox();
+                  },
+                ),
               ])),
         ),
         Positioned(
