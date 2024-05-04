@@ -7,10 +7,10 @@ const String _apiToken =
 class MovieRepo {
   final _dio = Dio(BaseOptions(baseUrl: "https://api.themoviedb.org/3/movie", headers: {"Authorization": "Bearer $_apiToken"}));
 
-  Future getNowPlayingMovies() async {
+  Future getNowPlayingMovies({int page = 1}) async {
     try {
       final Response response = await _dio.get(
-        "/now_playing?language=en-US&page=1",
+        "/now_playing?language=en-US&page=$page",
       );
       if (response.statusCode == 200) {
         final result = response.data;
@@ -26,10 +26,10 @@ class MovieRepo {
     }
   }
 
-  Future getTopRatedMovies() async {
+  Future getTopRatedMovies({int page = 1}) async {
     try {
       final Response response = await _dio.get(
-        "/top_rated?language=en-US&page=1",
+        "/top_rated?language=en-US&page=$page",
       );
       if (response.statusCode == 200) {
         final result = response.data;

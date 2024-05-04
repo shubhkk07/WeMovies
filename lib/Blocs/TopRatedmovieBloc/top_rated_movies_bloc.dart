@@ -9,6 +9,8 @@ part 'top_rated_movies_state.dart';
 class TopRatedMoviesBloc extends Bloc<TopRatedMoviesEvent, TopRatedMoviesState> {
   final List<Movie> _movies = [];
 
+  int _pageCount = 1;
+
   List<Movie> get movieList => _movies;
 
   final _moviesRepo = MovieRepo();
@@ -18,7 +20,8 @@ class TopRatedMoviesBloc extends Bloc<TopRatedMoviesEvent, TopRatedMoviesState> 
   }
 
   void _fetchTopRatedMovies(FetchTopRatedMovies event, Emitter<TopRatedMoviesState> emit) async {
-    final List<Movie> moviesList = await _moviesRepo.getTopRatedMovies();
+    (event.nextPage != null && event.nextPage!) ? _pageCount++ : _pageCount = 1;
+    final List<Movie> moviesList = await _moviesRepo.getTopRatedMovies(page: _pageCount);
     _movies.addAll(moviesList);
     emit(TopRatedMoviesLoaded(topRatedMovies: _movies));
   }

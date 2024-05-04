@@ -9,6 +9,8 @@ part 'movies_playing_state.dart';
 class MoviesPlayingBloc extends Bloc<MoviesPlayingEvent, MoviesPlayingState> {
   final List<Movie> _moviesList = [];
 
+  int _pageCount = 1;
+
   List<Movie> get nowPlayingMovies => _moviesList;
 
   final MovieRepo _movieRepo = MovieRepo();
@@ -18,7 +20,8 @@ class MoviesPlayingBloc extends Bloc<MoviesPlayingEvent, MoviesPlayingState> {
   }
 
   void _fethcNowPlayingMovies(FetchNowPlaying event, Emitter<MoviesPlayingState> emit) async {
-    final List<Movie> list = await _movieRepo.getNowPlayingMovies();
+    (event.nextPage != null && event.nextPage!) ? _pageCount++ : _pageCount = 1;
+    final List<Movie> list = await _movieRepo.getNowPlayingMovies(page: _pageCount);
     _moviesList.addAll(list);
     emit(MoviesPlayingLoaded(_moviesList));
   }
