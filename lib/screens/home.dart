@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:movieapp/Blocs/MoviesBloc/movies_playing_bloc.dart';
 import 'package:movieapp/Blocs/TopRatedmovieBloc/top_rated_movies_bloc.dart';
 import 'package:movieapp/Blocs/cubit/location_cubit.dart';
-import 'package:movieapp/extensions/double.dart';
+import 'package:movieapp/extensions/Date.dart';
+import 'package:movieapp/extensions/int.dart';
 import 'package:movieapp/screens/box_widget.dart';
 import 'package:movieapp/screens/custom_clipper.dart';
 import 'package:movieapp/screens/movie_image.dart';
@@ -29,20 +31,30 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var customShapeWidget = ClipPath(
-      clipper: BoxClipper(),
-      child: Container(
-          height: MediaQuery.of(context).size.height * 0.12,
-          decoration: BoxDecoration(color: const Color.fromARGB(44, 25, 20, 28), borderRadius: BorderRadius.circular(20)),
-          padding: const EdgeInsets.only(left: 16, top: 20),
-          child:
-              const Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(
-              "We Movies",
-              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
-            ),
-            Text("22 movies are loaded in now playing."),
-          ])),
+    var customShapeWidget = Stack(
+      children: [
+        ClipPath(
+          clipper: BoxClipper(),
+          child: Container(
+              height: MediaQuery.of(context).size.height * 0.12,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(color: const Color.fromARGB(44, 25, 20, 28), borderRadius: BorderRadius.circular(20)),
+              padding: const EdgeInsets.only(left: 16, top: 20),
+              child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.start, children: [
+                const Text(
+                  "We Movies",
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
+                ),
+                Text("22 movies are loaded in now playing."),
+              ])),
+        ),
+        Positioned(
+          left: 20,
+          child: Text(
+            DateTime.now().convertDateTime(),
+          ),
+        ),
+      ],
     );
 
     return Scaffold(
@@ -154,7 +166,7 @@ class _HomePageState extends State<HomePage> {
 
                       const SizedBox(height: 10),
 
-                      TopRatedMovies(),
+                      const TopRatedMovies(),
                     ],
                   ),
                 ),

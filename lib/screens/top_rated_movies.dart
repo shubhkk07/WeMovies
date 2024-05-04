@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movieapp/Blocs/TopRatedmovieBloc/top_rated_movies_bloc.dart';
-import 'package:movieapp/extensions/double.dart';
+import 'package:movieapp/extensions/int.dart';
 import 'package:movieapp/screens/movie_image.dart';
 
 class TopRatedMovies extends StatelessWidget {

@@ -21,6 +21,7 @@ class TopRatedMoviesBloc extends Bloc<TopRatedMoviesEvent, TopRatedMoviesState> 
 
   void _fetchTopRatedMovies(FetchTopRatedMovies event, Emitter<TopRatedMoviesState> emit) async {
     (event.nextPage != null && event.nextPage!) ? _pageCount++ : _pageCount = 1;
+    _pageCount == 1 ? _movies.clear() : null;
     final List<Movie> moviesList = await _moviesRepo.getTopRatedMovies(page: _pageCount);
     _movies.addAll(moviesList);
     emit(TopRatedMoviesLoaded(topRatedMovies: _movies));
