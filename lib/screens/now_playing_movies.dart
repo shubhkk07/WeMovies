@@ -1,0 +1,203 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movieapp/Blocs/MoviesBloc/movies_playing_bloc.dart';
+import 'package:movieapp/Blocs/TopRatedmovieBloc/top_rated_movies_bloc.dart';
+import 'package:movieapp/screens/custom_clipper.dart';
+import 'package:movieapp/screens/movie_image.dart';
+
+class NowPlayingMovies extends StatelessWidget {
+  const NowPlayingMovies({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.37,
+      child: BlocBuilder<MoviesPlayingBloc, MoviesPlayingState>(builder: (context, state) {
+        if (state is MoviesPlayingLoaded) {
+          return NotificationListener(
+            onNotification: (notification) {
+              if (notification is ScrollEndNotification && notification.metrics.extentAfter == 0) {
+                BlocProvider.of<MoviesPlayingBloc>(context).add(FetchNowPlaying(nextPage: true));
+              }
+              return false;
+            },
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: state.list.length,
+                itemBuilder: (context, index) {
+                  final movie = state.list[index];
+                  return Stack(
+                    children: [
+                      ClipPath(
+                          clipper: CustomShapeClipper(),
+                          child: Padding(
+                              padding: const EdgeInsets.only(right: 20.0),
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: MovieImage(
+                                    imagePath: movie.backdropPath ?? "",
+                                    size: Size(
+                                      MediaQuery.of(context).size.width * 0.65,
+                                      MediaQuery.of(context).size.height * 0.35,
+                                    ),
+                                  )))),
+                      Positioned(
+                        top: MediaQuery.of(context).size.height * 0.2,
+                        child: ClipPath(
+                          clipper: CustomShapeClipper(height: 0.2, width: 0.4),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                            decoration:
+                                BoxDecoration(borderRadius: BorderRadius.circular(20), color: Colors.black.withOpacity(0.5)),
+                            margin: const EdgeInsets.only(right: 20),
+                            height: MediaQuery.of(context).size.height * 0.15,
+                            width: MediaQuery.of(context).size.width * 0.65,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                        alignment: Alignment.topLeft,
+                                        width: MediaQuery.of(context).size.width * 0.27,
+                                        child: const Wrap(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(top: 2.0),
+                                              child: Icon(
+                                                Icons.place_outlined,
+                                                color: Colors.white,
+                                                size: 14,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 2,
+                                            ),
+                                            Text(
+                                              "English",
+                                              style: TextStyle(color: Colors.white, fontSize: 12),
+                                            )
+                                          ],
+                                        ))
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  movie.originalTitle ?? "",
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 2,
+                                ),
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.calendar_month_rounded,
+                                      color: Colors.white,
+                                      size: 12,
+                                    ),
+                                    const SizedBox(
+                                      width: 6,
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width * 0.48,
+                                      child: Text(
+                                        movie.overview ?? "",
+                                        maxLines: 2,
+                                        softWrap: true,
+                                        style: const TextStyle(color: Colors.white, fontSize: 11),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 4,
+                                ),
+                                Text(
+                                  "${movie.voteCount} Votes",
+                                  style: const TextStyle(color: Colors.white),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                          top: 8,
+                          right: 30,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(right: 4),
+                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                decoration:
+                                    BoxDecoration(color: Colors.black.withOpacity(0.5), borderRadius: BorderRadius.circular(20)),
+                                child: Wrap(
+                                  children: [
+                                    const Icon(
+                                      Icons.remove_red_eye_outlined,
+                                      color: Colors.white,
+                                      size: 16,
+                                    ),
+                                    const SizedBox(
+                                      width: 3,
+                                    ),
+                                    Text(
+                                      movie.voteCount.toString(),
+                                      style: const TextStyle(color: Colors.white, fontSize: 12),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.all(4),
+                                decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.black.withOpacity(0.5)),
+                                child: const Icon(
+                                  Icons.favorite_border_outlined,
+                                  color: Colors.white,
+                                  size: 16,
+                                ),
+                              )
+                            ],
+                          )),
+                      Positioned(
+                          top: 2,
+                          left: MediaQuery.of(context).size.width * 0.12,
+                          child: Wrap(
+                            crossAxisAlignment: WrapCrossAlignment.start,
+                            children: [
+                              Text(
+                                movie.voteAverage!.toStringAsFixed(2),
+                                style: TextStyle(fontWeight: FontWeight.w600),
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.only(left: 4.0),
+                                child: Icon(
+                                  Icons.star,
+                                  color: Color(0xffFFD700),
+                                  size: 16,
+                                ),
+                              )
+                            ],
+                          ))
+                    ],
+                  );
+                }),
+          );
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      }),
+    );
+  }
+}
