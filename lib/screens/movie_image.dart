@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dio/dio.dart';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:movieapp/screens/custom_clipper.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
 
@@ -26,10 +28,10 @@ class _MovieImageState extends State<MovieImage> {
 
   saveImageToLocalStorage() async {
     final url = MovieImage.url + widget.imagePath;
-    var response = await Dio().get(url);
+    var response = await get(Uri.parse(url));
     Directory directory = await getApplicationCacheDirectory();
     File file = File(path.join(directory.path, path.basename(widget.imagePath)));
-    await file.writeAsBytes(json.decode(utf8.decode(response.data)));
+    await file.writeAsBytes(response.bodyBytes);
   }
 
   Future<File?> getImageFromLocalStorage() async {
@@ -52,14 +54,21 @@ class _MovieImageState extends State<MovieImage> {
           if (snapshot.hasData && snapshot.data != null) {
             return Image.file(
               snapshot.data!,
-              width: widget.size.width,
+              fit: BoxFit.cover,
               height: widget.size.height,
-              errorBuilder: ((context, error, stackTrace) => CachedNetworkImage(
-                  width: widget.size.width, height: widget.size.height, imageUrl: MovieImage.url + widget.imagePath)),
+              width: widget.size.width,
+              errorBuilder: (context, error, stackTrace) => CachedNetworkImage(
+                  fit: BoxFit.cover,
+                  height: widget.size.height,
+                  width: widget.size.width,
+                  imageUrl: MovieImage.url + widget.imagePath),
             );
           } else {
             return CachedNetworkImage(
-                width: widget.size.width, height: widget.size.height, imageUrl: MovieImage.url + widget.imagePath);
+                fit: BoxFit.cover,
+                height: widget.size.height,
+                width: widget.size.width,
+                imageUrl: MovieImage.url + widget.imagePath);
           }
         });
   }

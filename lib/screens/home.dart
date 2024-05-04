@@ -5,6 +5,7 @@ import 'package:movieapp/Blocs/TopRatedmovieBloc/top_rated_movies_bloc.dart';
 import 'package:movieapp/Blocs/cubit/location_cubit.dart';
 import 'package:movieapp/screens/box_widget.dart';
 import 'package:movieapp/screens/custom_clipper.dart';
+import 'package:movieapp/screens/movie_image.dart';
 import 'package:movieapp/screens/movie_search_delegate.dart';
 
 class HomePage extends StatefulWidget {
@@ -95,19 +96,18 @@ class _HomePageState extends State<HomePage> {
                               return Stack(
                                 children: [
                                   ClipPath(
-                                    clipper: CustomShapeClipper(),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(right: 20.0),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: Image(
-                                            height: MediaQuery.of(context).size.height * 0.35,
-                                            width: MediaQuery.of(context).size.width * 0.65,
-                                            fit: BoxFit.fitHeight,
-                                            image: NetworkImage("https://image.tmdb.org/t/p/w500${movie.backdropPath}")),
-                                      ),
-                                    ),
-                                  ),
+                                      clipper: CustomShapeClipper(),
+                                      child: Padding(
+                                          padding: const EdgeInsets.only(right: 20.0),
+                                          child: ClipRRect(
+                                              borderRadius: BorderRadius.circular(20),
+                                              child: MovieImage(
+                                                imagePath: movie.backdropPath ?? "",
+                                                size: Size(
+                                                  MediaQuery.of(context).size.width * 0.65,
+                                                  MediaQuery.of(context).size.height * 0.35,
+                                                ),
+                                              )))),
                                   Positioned(
                                     top: MediaQuery.of(context).size.height * 0.2,
                                     child: ClipPath(
@@ -274,11 +274,10 @@ class _HomePageState extends State<HomePage> {
                                         children: [
                                           ClipRRect(
                                             borderRadius: BorderRadius.all(Radius.circular(16)),
-                                            child: Image(
-                                              fit: BoxFit.fill,
-                                              height: MediaQuery.of(context).size.height * 0.16,
-                                              width: MediaQuery.of(context).size.width * 0.75,
-                                              image: NetworkImage("https://image.tmdb.org/t/p/w500${movie.backdropPath}"),
+                                            child: MovieImage(
+                                              size: Size(MediaQuery.of(context).size.width * 0.75,
+                                                  MediaQuery.of(context).size.height * 0.16),
+                                              imagePath: movie.backdropPath ?? "",
                                             ),
                                           ),
                                         ],
