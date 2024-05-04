@@ -21,7 +21,7 @@ class BoxClipper extends CustomClipper<Path> {
     path.lineTo(size.width * 0.85 - 20, size.height);
     path.arcToPoint(Offset(size.width * 0.85, size.height - 20), radius: radius, clockwise: false);
     path.arcToPoint(Offset(size.width * 0.85 + 30, size.height - 40), radius: const Radius.circular(20));
-    path.arcToPoint(Offset(size.width, size.height - 50), radius: Radius.circular(20), clockwise: false);
+    path.arcToPoint(Offset(size.width, size.height - 60), radius: Radius.circular(20), clockwise: false);
     path.lineTo(size.width, 0);
     path.close();
 
