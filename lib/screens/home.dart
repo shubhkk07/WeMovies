@@ -109,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       Row(
                         children: [
-                          Text("NOW PLAYING"),
+                          const Text("NOW PLAYING"),
                           Container(
                             margin: const EdgeInsets.only(left: 20),
                             height: 1,
@@ -123,39 +123,14 @@ class _HomePageState extends State<HomePage> {
                       const SizedBox(
                         height: 4,
                       ),
-                      const NowPlayingMovies(),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.black),
-                            child: Text(
-                              '1/22',
-                              style: TextStyle(color: Colors.white, fontSize: 12),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 10),
-                            decoration: BoxDecoration(color: Colors.black, shape: BoxShape.circle),
-                            height: 10,
-                            width: 10,
-                          ),
-                          Container(
-                            decoration: const BoxDecoration(color: Colors.black, shape: BoxShape.circle),
-                            height: 10,
-                            width: 10,
-                          )
-                        ],
-                      ),
+                      NowPlayingMovies(),
 
                       const SizedBox(height: 20),
 
                       //TOP Rated
                       Row(
                         children: [
-                          Text("TOP RATED"),
+                          const Text("TOP RATED"),
                           Container(
                             margin: const EdgeInsets.only(left: 20),
                             height: 1,

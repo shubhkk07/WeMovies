@@ -11,8 +11,8 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
   @override
   void initState() {
-    Future.delayed(Duration(seconds: 4), () {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
+    Future.delayed(const Duration(seconds: 4), () {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomePage()));
     });
     super.initState();
   }
