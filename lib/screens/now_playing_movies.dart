@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:movieapp/Blocs/MoviesBloc/movies_playing_bloc.dart';
 import 'package:movieapp/screens/custom_clipper.dart';
 import 'package:movieapp/screens/movie_image.dart';
@@ -69,9 +70,9 @@ class NowPlayingMovies extends StatelessWidget {
                                         Container(
                                             alignment: Alignment.topLeft,
                                             width: MediaQuery.of(context).size.width * 0.27,
-                                            child: const Wrap(
+                                            child: Wrap(
                                               children: [
-                                                Padding(
+                                                const Padding(
                                                   padding: EdgeInsets.only(top: 2.0),
                                                   child: Icon(
                                                     Icons.place_outlined,
@@ -79,11 +80,12 @@ class NowPlayingMovies extends StatelessWidget {
                                                     size: 14,
                                                   ),
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   width: 2,
                                                 ),
                                                 Text(
-                                                  "English",
+                                                  LocaleNames.of(context)?.nameOf(movie.originalLanguage ?? "en") ??
+                                                      "".toString(),
                                                   style: TextStyle(color: Colors.white, fontSize: 12),
                                                 )
                                               ],

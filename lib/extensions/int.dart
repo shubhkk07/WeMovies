@@ -9,15 +9,19 @@ extension ConvertNumber on int {
   String toOrdinal() {
     if (this < 0) throw Exception('Invalid Number');
 
-    switch (this % 10) {
-      case 1:
-        return '${this}st';
-      case 2:
-        return '${this}nd';
-      case 3:
-        return '${this}rd';
-      default:
-        return '${this}th';
+    if (this / 10 == 0) {
+      switch (this % 10) {
+        case 1:
+          return '${this}st';
+        case 2:
+          return '${this}nd';
+        case 3:
+          return '${this}rd';
+        default:
+          return '${this}th';
+      }
+    } else {
+      return '${this}th';
     }
   }
 }
