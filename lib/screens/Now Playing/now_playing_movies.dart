@@ -2,14 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:movieapp/Blocs/MoviesBloc/movies_playing_bloc.dart';
-import 'package:movieapp/screens/custom_clipper.dart';
-import 'package:movieapp/screens/movie_image.dart';
-import 'package:movieapp/screens/now_playing_movies_index.dart';
+import 'package:movieapp/screens/Components/custom_clipper.dart';
+import 'package:movieapp/screens/Movie%20Item/movie_image.dart';
+import 'package:movieapp/screens/Now%20Playing/now_playing_movies_index.dart';
 
-class NowPlayingMovies extends StatelessWidget {
-  NowPlayingMovies({super.key});
+class NowPlayingMovies extends StatefulWidget {
+  const NowPlayingMovies({super.key});
 
+  @override
+  State<NowPlayingMovies> createState() => _NowPlayingMoviesState();
+}
+
+class _NowPlayingMoviesState extends State<NowPlayingMovies> {
   final ScrollController controller = ScrollController();
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

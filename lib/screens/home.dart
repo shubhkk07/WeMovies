@@ -6,12 +6,12 @@ import 'package:movieapp/Blocs/TopRatedmovieBloc/top_rated_movies_bloc.dart';
 import 'package:movieapp/Blocs/cubit/location_cubit.dart';
 import 'package:movieapp/extensions/Date.dart';
 import 'package:movieapp/extensions/int.dart';
-import 'package:movieapp/screens/box_widget.dart';
-import 'package:movieapp/screens/custom_clipper.dart';
-import 'package:movieapp/screens/movie_image.dart';
-import 'package:movieapp/screens/movie_search_delegate.dart';
-import 'package:movieapp/screens/now_playing_movies.dart';
-import 'package:movieapp/screens/top_rated_movies.dart';
+import 'package:movieapp/screens/Components/box_widget.dart';
+import 'package:movieapp/screens/Components/custom_clipper.dart';
+import 'package:movieapp/screens/Movie%20Item/movie_image.dart';
+import 'package:movieapp/screens/Seach%20Movie/movie_search_delegate.dart';
+import 'package:movieapp/screens/Now%20Playing/now_playing_movies.dart';
+import 'package:movieapp/screens/Top%20Rated/top_rated_movies.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -24,8 +24,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     BlocProvider.of<LocationCubit>(context, listen: false).checkPermission();
-    BlocProvider.of<TopRatedMoviesBloc>(context, listen: false).add(FetchTopRatedMovies());
-    BlocProvider.of<MoviesPlayingBloc>(context, listen: false).add(FetchNowPlaying());
     super.initState();
   }
 

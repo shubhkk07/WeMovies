@@ -18,8 +18,8 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => LocationCubit()),
-        BlocProvider(create: (context) => MoviesPlayingBloc()),
-        BlocProvider(create: (context) => TopRatedMoviesBloc()),
+        BlocProvider(create: (context) => MoviesPlayingBloc()..add(FetchNowPlaying())),
+        BlocProvider(create: (context) => TopRatedMoviesBloc()..add(FetchTopRatedMovies())),
       ],
       child: MaterialApp(
         title: 'WeMovie',

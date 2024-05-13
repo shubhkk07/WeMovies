@@ -1,13 +1,10 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:movieapp/screens/custom_clipper.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart';
 
 class MovieImage extends StatefulWidget {
   static const url = 'https://image.tmdb.org/t/p/w500';
@@ -62,8 +59,8 @@ class _MovieImageState extends State<MovieImage> {
                   height: widget.size.height,
                   width: widget.size.width,
                   alignment: Alignment.center,
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 20.0),
+                  child: const Padding(
+                    padding: EdgeInsets.only(bottom: 20.0),
                     child: Icon(
                       Icons.no_photography,
                       size: 40,
